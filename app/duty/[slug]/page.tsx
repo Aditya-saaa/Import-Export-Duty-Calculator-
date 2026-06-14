@@ -6,9 +6,10 @@ import Calculator from '@/components/Calculator'
 
 // ─── Static Generation ────────────────────────────────────
 export async function generateStaticParams() {
-  const slugs = await getAllProductSlugs()
-  return slugs.map(s => ({ slug: s.slug }))
+  return []
 }
+
+export const dynamicParams = true
 
 export const revalidate = 86400 // Rebuild pages every 24 hours
 
