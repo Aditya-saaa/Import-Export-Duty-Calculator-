@@ -126,3 +126,4 @@ vercel
 | 5-6 | First traffic | Apply for AdSense |
 | 8-10 | ₹15K/mo | Add CHA lead gen |
 | 12+ | ₹50K+/mo | Add premium tier |
+redeploy
