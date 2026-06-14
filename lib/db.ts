@@ -23,19 +23,18 @@ export const db = drizzle(getClient(), { schema })
 
 // Get product with HS code + duty rate
 export async function getProductBySlug(slug: string) {
-  const result = await db.query.products.findFirst({
+  return await db.query.products.findFirst({
     where: (p, { eq }) => eq(p.slug, slug),
     with: {
       hsCode: {
         with: {
           dutyRate: true,
           ftaRates: true,
-          history:  true,
+          history: true,
         },
       },
     },
   })
-  return result
 }
 
 // Get HS code with duty rate
@@ -46,35 +45,44 @@ export async function getHSCode(id: string) {
       dutyRate: true,
       products: { limit: 5 },
       ftaRates: true,
-      history:  true,
+      history: true,
     },
   })
 }
 
-// Get all products for sitemap / static generation
+// Get all products
 export async function getAllProductSlugs() {
   return await db.query.products.findMany({
-    columns: { slug: true },
+    columns: {
+      slug: true,
+    },
   })
 }
 
-// Search products by name (FTS5)
-export async function searchProductsByName(query: string, limit = 8) {
-	const results = await getClient().execute({
+// Search products by name
+export async function searchProductsByName(
+  query: string,
+  limit = 8
+) {
+  const results = await getClient().execute({
     sql: `
       SELECT
-        p.id, p.name, p.slug, p.category,
-        d.bcd, d.igst,
-        p.hs_code_id,
-        bm25(products_fts) as rank
-      FROM products_fts
-      JOIN products p ON products_fts.rowid = p.id
-      LEFT JOIN duty_rates d ON p.hs_code_id = d.hs_code_id
-      WHERE products_fts MATCH ?
-      ORDER BY rank
+        p.id,
+        p.name,
+        p.slug,
+        p.category,
+        d.bcd,
+        d.igst,
+        p.hs_code_id
+      FROM products p
+      LEFT JOIN duty_rates d
+        ON p.hs_code_id = d.hs_code_id
+      WHERE LOWER(p.name) LIKE LOWER(?)
+      ORDER BY p.name
       LIMIT ?
     `,
-    args: [query + '*', limit],
+    args: [`%${query}%`, limit],
   })
+
   return results.rows
 }
