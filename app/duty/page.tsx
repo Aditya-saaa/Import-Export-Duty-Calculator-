@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import { db } from '@/lib/db'
 import { effectiveRate } from '@/lib/calculations'
