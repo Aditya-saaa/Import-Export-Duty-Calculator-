@@ -111,6 +111,20 @@ export const productsRelations = relations(products, ({ one }) => ({
   hsCode: one(hsCodes, { fields: [products.hsCodeId], references: [hsCodes.id] }),
 }))
 
+export const ftaRatesRelations = relations(ftaRates, ({ one }) => ({
+  hsCode: one(hsCodes, {
+    fields: [ftaRates.hsCodeId],
+    references: [hsCodes.id],
+  }),
+}))
+
+export const dutyHistoryRelations = relations(dutyHistory, ({ one }) => ({
+  hsCode: one(hsCodes, {
+    fields: [dutyHistory.hsCodeId],
+    references: [hsCodes.id],
+  }),
+}))
+
 // ─── Types ────────────────────────────────────────────────
 export type HSCode    = typeof hsCodes.$inferSelect
 export type DutyRate  = typeof dutyRates.$inferSelect
