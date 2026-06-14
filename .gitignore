@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Production
+build/
+
+# Environment variables — NEVER commit these (contains API keys, DB tokens)
+.env
+.env*.local
+
+# Local SQLite files (if any)
+*.db
+*.db-journal
+
+# Vercel
+.vercel
+
+# Editor / OS
+.DS_Store
+*.pem
+npm-debug.log*
