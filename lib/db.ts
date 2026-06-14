@@ -60,7 +60,7 @@ export async function getAllProductSlugs() {
 
 // Search products by name (FTS5)
 export async function searchProductsByName(query: string, limit = 8) {
-  const results = await client.execute({
+	const results = await getClient().execute({
     sql: `
       SELECT
         p.id, p.name, p.slug, p.category,
