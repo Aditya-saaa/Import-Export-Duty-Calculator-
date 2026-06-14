@@ -6,7 +6,11 @@ import Calculator from '@/components/Calculator'
 
 // ─── Static Generation ────────────────────────────────────
 export async function generateStaticParams() {
-  return []
+  const products = await getAllProductSlugs()
+
+  return products.map((p) => ({
+    slug: p.slug,
+  }))
 }
 
 export const dynamicParams = true
